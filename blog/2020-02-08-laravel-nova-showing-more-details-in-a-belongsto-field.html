@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Laravel Nova: Showing more details in a BelongsTo field | loekwetzels.github.io</title>
+    <meta name="description" content="">
+    <meta name="generator" content="VuePress 1.3.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon.png">
+  <link rel="icon" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+    
+    <link rel="preload" href="/assets/css/0.styles.6c1fadd1.css" as="style"><link rel="preload" href="/assets/js/app.034c3224.js" as="script"><link rel="preload" href="/assets/js/3.bcff5d57.js" as="script"><link rel="preload" href="/assets/js/2.49a61b6c.js" as="script"><link rel="preload" href="/assets/js/6.9ba3dfb8.js" as="script"><link rel="prefetch" href="/assets/js/10.b4a46969.js"><link rel="prefetch" href="/assets/js/11.a3c7cd02.js"><link rel="prefetch" href="/assets/js/12.e5a18124.js"><link rel="prefetch" href="/assets/js/4.7d597b74.js"><link rel="prefetch" href="/assets/js/5.484c386e.js"><link rel="prefetch" href="/assets/js/7.88395915.js"><link rel="prefetch" href="/assets/js/8.970ce1e4.js"><link rel="prefetch" href="/assets/js/9.90dfb8ec.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6c1fadd1.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="https://avatars0.githubusercontent.com/u/867536" alt="loekwetzels.github.io" class="logo"> <span class="site-name can-hide">loekwetzels.github.io</span></a> <div class="links"><!----> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <div class="theme-default-content" data-v-688dbd1a><article data-v-688dbd1a><header class="header" data-v-688dbd1a><section data-v-688dbd1a><ul class="list" data-v-e20cba16 data-v-688dbd1a></ul></section> <h1 class="title" data-v-688dbd1a>Laravel Nova: Showing more details in a BelongsTo field</h1> <p class="excerpt" data-v-688dbd1a>Is it possible to display more data on a BelongsTo field in Laravel nova? The answer is yes!</p> <section data-v-688dbd1a><span class="meta" data-v-f7e05c18 data-v-688dbd1a><time datetime="$page.lastUpdated" data-v-f7e05c18></time> 08 Feb 2020 • Last updated a few seconds ago
+</span></section></header> <section data-v-688dbd1a><div class="body content__default" data-v-688dbd1a><p>Imagine you have a <code>User</code> Nova resource. The <code>User</code> should appear by <code>name</code> in the index and detail views etc.</p> <p>Now imagine you have another Nova resource, for example, a <code>Post</code> resource. You want to attach a <code>User</code> to this <code>Post</code> using a <code>BelongsTo</code> field. But only displaying the <code>User.name</code> in this specific view is just to limited. You want to display more fields in this specifc case, for example the <code>User</code>'s email address and id. <strong>It's possible using a simple trick!</strong> Here's how to do it.</p> <p><img src="/assets/img/2020-02-08-laravel-nova-showing-more-details-in-a-belongsto-field.1ab34ef9.png" alt="Nova"></p> <h2 id="step-1-nothing-tricky-yet-on-the-user-resource"><a href="#step-1-nothing-tricky-yet-on-the-user-resource" aria-hidden="true" class="header-anchor">#</a> Step 1: Nothing tricky yet on the <code>User</code> resource</h2> <p>Just define a <code>public static $title</code> and set it to the <code>name</code> attribute. Your User resource will display by name in User indexes etc.</p> <div class="custom-block tip"><p class="custom-block-title">app/Nova/User.php</p> <div class="language-php line-numbers-mode"><div class="highlight-lines"><br><br><br><div class="highlighted"> </div><br><br><br></div><pre class="language-php"><code><span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token keyword">extends</span> <span class="token class-name">Resource</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// ...</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token variable">$title</span> <span class="token operator">=</span> <span class="token single-quoted-string string">'name'</span><span class="token punctuation">;</span>
+	<span class="token comment">// ...</span>
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div></div> <h2 id="step-2-you-can-extend-nova-resources"><a href="#step-2-you-can-extend-nova-resources" aria-hidden="true" class="header-anchor">#</a> Step 2: You can extend Nova resources! 🎉</h2> <p>You can extend Nova resources! Simply extend your <code>User</code> resource created in step 1. You can call it whatever you like. I named mine <code>UserDetailedTitle</code> and placed in a <code>Helpers</code> folder because I want to keep my Nova resources folder clean.</p> <p>Hide this resource from global Nova search, and navigation, because you don't want it to show up anywhere per default.</p> <p>Now we can define a more descriptive <code>title</code> on this new resource.</p> <div class="custom-block tip"><p class="custom-block-title">app/Nova/Helpers/UserDetailedTitle.php</p> <div class="language-php line-numbers-mode"><div class="highlight-lines"><br><br><br><div class="highlighted"> </div><br><br><br><div class="highlighted"> </div><div class="highlighted"> </div><br><br><div class="highlighted"> </div><div class="highlighted"> </div><div class="highlighted"> </div><div class="highlighted"> </div><div class="highlighted"> </div><div class="highlighted"> </div><div class="highlighted"> </div><div class="highlighted"> </div><br><br><br></div><pre class="language-php"><code><span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Nova<span class="token punctuation">\</span>Helpers</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">App<span class="token punctuation">\</span>Nova<span class="token punctuation">\</span>User</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">UserDetailedTitle</span> <span class="token keyword">extends</span> <span class="token class-name">User</span>
+<span class="token punctuation">{</span>
+
+	<span class="token comment">// hide resource</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token variable">$globallySearchable</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token variable">$displayInNavigation</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">// how you want the resource to appear</span>
+	<span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">title</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">implode</span><span class="token punctuation">(</span><span class="token single-quoted-string string">' / '</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>
+            <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">id</span><span class="token punctuation">,</span>
+            <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">name</span><span class="token punctuation">,</span>
+            <span class="token variable">$this</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token property">email</span>
+        <span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div></div> <h2 id="step-3-use-this-extended-resource-in-your-belongsto-field"><a href="#step-3-use-this-extended-resource-in-your-belongsto-field" aria-hidden="true" class="header-anchor">#</a> Step 3: Use this extended resource in your BelongsTo field</h2> <p>Set the third parameter to your extended Nova resource.</p> <div class="custom-block tip"><p class="custom-block-title">app/Nova/Post.php</p> <div class="language-php line-numbers-mode"><div class="highlight-lines"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><div class="highlighted"> </div><br><br><br><br><br><br><br><br><br></div><pre class="language-php"><code><span class="token keyword">namespace</span> <span class="token package">App<span class="token punctuation">\</span>Nova</span><span class="token punctuation">;</span>
+
+<span class="token keyword">use</span> <span class="token package">Illuminate<span class="token punctuation">\</span>Http<span class="token punctuation">\</span>Request</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">Laravel<span class="token punctuation">\</span>Nova<span class="token punctuation">\</span>Fields<span class="token punctuation">\</span>BelongsTo</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">App<span class="token punctuation">\</span>Nova<span class="token punctuation">\</span>Helpers<span class="token punctuation">\</span>CustomerDetailedTitle</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Post</span> <span class="token keyword">extends</span> <span class="token class-name">Resource</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// ...</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">fields</span><span class="token punctuation">(</span>Request <span class="token variable">$request</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span>
+			
+			BelongsTo<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">make</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'Author'</span><span class="token punctuation">,</span> <span class="token single-quoted-string string">'author'</span><span class="token punctuation">,</span> UserDetailedTitle<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">)</span>
+				<span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">searchable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+
+		<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment">// ...</span>
+	
+<span class="token punctuation">}</span>
+</code></pre><div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br></div></div></div> <p>It's magic! 🎉</p></div></section> <div class="page-edit" data-v-688dbd1a><!----></div> <!----> </article></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.034c3224.js" defer></script><script src="/assets/js/3.bcff5d57.js" defer></script><script src="/assets/js/2.49a61b6c.js" defer></script><script src="/assets/js/6.9ba3dfb8.js" defer></script>
+  </body>
+</html>
